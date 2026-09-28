@@ -1,0 +1,755 @@
+▶	⊢		compare	→
+compare	0	)	compare_0	→
+compare_0	,		found_compare_0	→
+compare	1	!	compare_1	→
+compare_1	,		found_compare_1	→
+compare	2	@	compare_2	→
+compare_2	,		found_compare_2	→
+compare	3	#	compare_3	→
+compare_3	,		found_compare_3	→
+compare	4	$	compare_4	→
+compare_4	,		found_compare_4	→
+compare	5	%	compare_5	→
+compare_5	,		found_compare_5	→
+compare	6	^	compare_6	→
+compare_6	,		found_compare_6	→
+compare	7	&	compare_7	→
+compare_7	,		found_compare_7	→
+compare	8	*	compare_8	→
+compare_8	,		found_compare_8	→
+compare	9	(	compare_9	→
+compare_9	,		found_compare_9	→
+compare	a	A	compare_a	→
+compare_a	,		found_compare_a	→
+compare	b	B	compare_b	→
+compare_b	,		found_compare_b	→
+compare	c	C	compare_c	→
+compare_c	,		found_compare_c	→
+compare	d	D	compare_d	→
+compare_d	,		found_compare_d	→
+compare	e	E	compare_e	→
+compare_e	,		found_compare_e	→
+compare	f	F	compare_f	→
+compare_f	,		found_compare_f	→
+compare_0	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_1	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_2	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_3	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_4	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_5	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_6	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_7	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_8	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_9	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_a	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_b	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_c	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_d	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_e	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare_f	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+compare	) ! @ # $ % ^ & * ( A B C D E F			→
+compare	,		equal_restore	←
+equal_restore	0 ) 1 ! 2 @ 3 # 4 $ 5 % 6 ^ 7 & 8 * 9 ( a A b B c C d D e E f F ,			←
+equal_restore	⊢		restore	→
+restore	,			→
+restore	0 )	0		→
+restore	1 !	1		→
+restore	2 @	2		→
+restore	3 #	3		→
+restore	4 $	4		→
+restore	5 %	5		→
+restore	6 ^	6		→
+restore	7 &	7		→
+restore	8 *	8		→
+restore	9 (	9		→
+restore	a A	a		→
+restore	b B	b		→
+restore	c C	c		→
+restore	d D	d		→
+restore	e E	e		→
+restore	f F	f		→
+swap_restore	,			→
+swap_restore	0 )	0		→
+swap_restore	1 !	1		→
+swap_restore	2 @	2		→
+swap_restore	3 #	3		→
+swap_restore	4 $	4		→
+swap_restore	5 %	5		→
+swap_restore	6 ^	6		→
+swap_restore	7 &	7		→
+swap_restore	8 *	8		→
+swap_restore	9 (	9		→
+swap_restore	a A	a		→
+swap_restore	b B	b		→
+swap_restore	c C	c		→
+swap_restore	d D	d		→
+swap_restore	e E	e		→
+swap_restore	f F	f		→
+restore	⊣		✔	⏹
+swap_restore	⊣		swap_prep	←
+swap_prep	0 ) 1 ! 2 @ 3 # 4 $ 5 % 6 ^ 7 & 8 * 9 ( a A b B c C d D e E f F ,			←
+swap_prep	⊢		swap	→
+found_compare_0	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_0	0	)	back	←
+found_compare_0	1	!	less_restore	←
+found_compare_0	2	@	less_restore	←
+found_compare_0	3	#	less_restore	←
+found_compare_0	4	$	less_restore	←
+found_compare_0	5	%	less_restore	←
+found_compare_0	6	^	less_restore	←
+found_compare_0	7	&	less_restore	←
+found_compare_0	8	*	less_restore	←
+found_compare_0	9	(	less_restore	←
+found_compare_0	a	A	less_restore	←
+found_compare_0	b	B	less_restore	←
+found_compare_0	c	C	less_restore	←
+found_compare_0	d	D	less_restore	←
+found_compare_0	e	E	less_restore	←
+found_compare_0	f	F	less_restore	←
+found_compare_1	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_1	0	)	greater_restore	←
+found_compare_1	1	!	back	←
+found_compare_1	2	@	less_restore	←
+found_compare_1	3	#	less_restore	←
+found_compare_1	4	$	less_restore	←
+found_compare_1	5	%	less_restore	←
+found_compare_1	6	^	less_restore	←
+found_compare_1	7	&	less_restore	←
+found_compare_1	8	*	less_restore	←
+found_compare_1	9	(	less_restore	←
+found_compare_1	a	A	less_restore	←
+found_compare_1	b	B	less_restore	←
+found_compare_1	c	C	less_restore	←
+found_compare_1	d	D	less_restore	←
+found_compare_1	e	E	less_restore	←
+found_compare_1	f	F	less_restore	←
+found_compare_2	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_2	0	)	greater_restore	←
+found_compare_2	1	!	greater_restore	←
+found_compare_2	2	@	back	←
+found_compare_2	3	#	less_restore	←
+found_compare_2	4	$	less_restore	←
+found_compare_2	5	%	less_restore	←
+found_compare_2	6	^	less_restore	←
+found_compare_2	7	&	less_restore	←
+found_compare_2	8	*	less_restore	←
+found_compare_2	9	(	less_restore	←
+found_compare_2	a	A	less_restore	←
+found_compare_2	b	B	less_restore	←
+found_compare_2	c	C	less_restore	←
+found_compare_2	d	D	less_restore	←
+found_compare_2	e	E	less_restore	←
+found_compare_2	f	F	less_restore	←
+found_compare_3	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_3	0	)	greater_restore	←
+found_compare_3	1	!	greater_restore	←
+found_compare_3	2	@	greater_restore	←
+found_compare_3	3	#	back	←
+found_compare_3	4	$	less_restore	←
+found_compare_3	5	%	less_restore	←
+found_compare_3	6	^	less_restore	←
+found_compare_3	7	&	less_restore	←
+found_compare_3	8	*	less_restore	←
+found_compare_3	9	(	less_restore	←
+found_compare_3	a	A	less_restore	←
+found_compare_3	b	B	less_restore	←
+found_compare_3	c	C	less_restore	←
+found_compare_3	d	D	less_restore	←
+found_compare_3	e	E	less_restore	←
+found_compare_3	f	F	less_restore	←
+found_compare_4	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_4	0	)	greater_restore	←
+found_compare_4	1	!	greater_restore	←
+found_compare_4	2	@	greater_restore	←
+found_compare_4	3	#	greater_restore	←
+found_compare_4	4	$	back	←
+found_compare_4	5	%	less_restore	←
+found_compare_4	6	^	less_restore	←
+found_compare_4	7	&	less_restore	←
+found_compare_4	8	*	less_restore	←
+found_compare_4	9	(	less_restore	←
+found_compare_4	a	A	less_restore	←
+found_compare_4	b	B	less_restore	←
+found_compare_4	c	C	less_restore	←
+found_compare_4	d	D	less_restore	←
+found_compare_4	e	E	less_restore	←
+found_compare_4	f	F	less_restore	←
+found_compare_5	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_5	0	)	greater_restore	←
+found_compare_5	1	!	greater_restore	←
+found_compare_5	2	@	greater_restore	←
+found_compare_5	3	#	greater_restore	←
+found_compare_5	4	$	greater_restore	←
+found_compare_5	5	%	back	←
+found_compare_5	6	^	less_restore	←
+found_compare_5	7	&	less_restore	←
+found_compare_5	8	*	less_restore	←
+found_compare_5	9	(	less_restore	←
+found_compare_5	a	A	less_restore	←
+found_compare_5	b	B	less_restore	←
+found_compare_5	c	C	less_restore	←
+found_compare_5	d	D	less_restore	←
+found_compare_5	e	E	less_restore	←
+found_compare_5	f	F	less_restore	←
+found_compare_6	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_6	0	)	greater_restore	←
+found_compare_6	1	!	greater_restore	←
+found_compare_6	2	@	greater_restore	←
+found_compare_6	3	#	greater_restore	←
+found_compare_6	4	$	greater_restore	←
+found_compare_6	5	%	greater_restore	←
+found_compare_6	6	^	back	←
+found_compare_6	7	&	less_restore	←
+found_compare_6	8	*	less_restore	←
+found_compare_6	9	(	less_restore	←
+found_compare_6	a	A	less_restore	←
+found_compare_6	b	B	less_restore	←
+found_compare_6	c	C	less_restore	←
+found_compare_6	d	D	less_restore	←
+found_compare_6	e	E	less_restore	←
+found_compare_6	f	F	less_restore	←
+found_compare_7	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_7	0	)	greater_restore	←
+found_compare_7	1	!	greater_restore	←
+found_compare_7	2	@	greater_restore	←
+found_compare_7	3	#	greater_restore	←
+found_compare_7	4	$	greater_restore	←
+found_compare_7	5	%	greater_restore	←
+found_compare_7	6	^	greater_restore	←
+found_compare_7	7	&	back	←
+found_compare_7	8	*	less_restore	←
+found_compare_7	9	(	less_restore	←
+found_compare_7	a	A	less_restore	←
+found_compare_7	b	B	less_restore	←
+found_compare_7	c	C	less_restore	←
+found_compare_7	d	D	less_restore	←
+found_compare_7	e	E	less_restore	←
+found_compare_7	f	F	less_restore	←
+found_compare_8	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_8	0	)	greater_restore	←
+found_compare_8	1	!	greater_restore	←
+found_compare_8	2	@	greater_restore	←
+found_compare_8	3	#	greater_restore	←
+found_compare_8	4	$	greater_restore	←
+found_compare_8	5	%	greater_restore	←
+found_compare_8	6	^	greater_restore	←
+found_compare_8	7	&	greater_restore	←
+found_compare_8	8	*	back	←
+found_compare_8	9	(	less_restore	←
+found_compare_8	a	A	less_restore	←
+found_compare_8	b	B	less_restore	←
+found_compare_8	c	C	less_restore	←
+found_compare_8	d	D	less_restore	←
+found_compare_8	e	E	less_restore	←
+found_compare_8	f	F	less_restore	←
+found_compare_9	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_9	0	)	greater_restore	←
+found_compare_9	1	!	greater_restore	←
+found_compare_9	2	@	greater_restore	←
+found_compare_9	3	#	greater_restore	←
+found_compare_9	4	$	greater_restore	←
+found_compare_9	5	%	greater_restore	←
+found_compare_9	6	^	greater_restore	←
+found_compare_9	7	&	greater_restore	←
+found_compare_9	8	*	greater_restore	←
+found_compare_9	9	(	back	←
+found_compare_9	a	A	less_restore	←
+found_compare_9	b	B	less_restore	←
+found_compare_9	c	C	less_restore	←
+found_compare_9	d	D	less_restore	←
+found_compare_9	e	E	less_restore	←
+found_compare_9	f	F	less_restore	←
+found_compare_a	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_a	0	)	greater_restore	←
+found_compare_a	1	!	greater_restore	←
+found_compare_a	2	@	greater_restore	←
+found_compare_a	3	#	greater_restore	←
+found_compare_a	4	$	greater_restore	←
+found_compare_a	5	%	greater_restore	←
+found_compare_a	6	^	greater_restore	←
+found_compare_a	7	&	greater_restore	←
+found_compare_a	8	*	greater_restore	←
+found_compare_a	9	(	greater_restore	←
+found_compare_a	a	A	back	←
+found_compare_a	b	B	less_restore	←
+found_compare_a	c	C	less_restore	←
+found_compare_a	d	D	less_restore	←
+found_compare_a	e	E	less_restore	←
+found_compare_a	f	F	less_restore	←
+found_compare_b	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_b	0	)	greater_restore	←
+found_compare_b	1	!	greater_restore	←
+found_compare_b	2	@	greater_restore	←
+found_compare_b	3	#	greater_restore	←
+found_compare_b	4	$	greater_restore	←
+found_compare_b	5	%	greater_restore	←
+found_compare_b	6	^	greater_restore	←
+found_compare_b	7	&	greater_restore	←
+found_compare_b	8	*	greater_restore	←
+found_compare_b	9	(	greater_restore	←
+found_compare_b	a	A	greater_restore	←
+found_compare_b	b	B	back	←
+found_compare_b	c	C	less_restore	←
+found_compare_b	d	D	less_restore	←
+found_compare_b	e	E	less_restore	←
+found_compare_b	f	F	less_restore	←
+found_compare_c	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_c	0	)	greater_restore	←
+found_compare_c	1	!	greater_restore	←
+found_compare_c	2	@	greater_restore	←
+found_compare_c	3	#	greater_restore	←
+found_compare_c	4	$	greater_restore	←
+found_compare_c	5	%	greater_restore	←
+found_compare_c	6	^	greater_restore	←
+found_compare_c	7	&	greater_restore	←
+found_compare_c	8	*	greater_restore	←
+found_compare_c	9	(	greater_restore	←
+found_compare_c	a	A	greater_restore	←
+found_compare_c	b	B	greater_restore	←
+found_compare_c	c	C	back	←
+found_compare_c	d	D	less_restore	←
+found_compare_c	e	E	less_restore	←
+found_compare_c	f	F	less_restore	←
+found_compare_d	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_d	0	)	greater_restore	←
+found_compare_d	1	!	greater_restore	←
+found_compare_d	2	@	greater_restore	←
+found_compare_d	3	#	greater_restore	←
+found_compare_d	4	$	greater_restore	←
+found_compare_d	5	%	greater_restore	←
+found_compare_d	6	^	greater_restore	←
+found_compare_d	7	&	greater_restore	←
+found_compare_d	8	*	greater_restore	←
+found_compare_d	9	(	greater_restore	←
+found_compare_d	a	A	greater_restore	←
+found_compare_d	b	B	greater_restore	←
+found_compare_d	c	C	greater_restore	←
+found_compare_d	d	D	back	←
+found_compare_d	e	E	less_restore	←
+found_compare_d	f	F	less_restore	←
+found_compare_e	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_e	0	)	greater_restore	←
+found_compare_e	1	!	greater_restore	←
+found_compare_e	2	@	greater_restore	←
+found_compare_e	3	#	greater_restore	←
+found_compare_e	4	$	greater_restore	←
+found_compare_e	5	%	greater_restore	←
+found_compare_e	6	^	greater_restore	←
+found_compare_e	7	&	greater_restore	←
+found_compare_e	8	*	greater_restore	←
+found_compare_e	9	(	greater_restore	←
+found_compare_e	a	A	greater_restore	←
+found_compare_e	b	B	greater_restore	←
+found_compare_e	c	C	greater_restore	←
+found_compare_e	d	D	greater_restore	←
+found_compare_e	e	E	back	←
+found_compare_e	f	F	less_restore	←
+found_compare_f	) ! @ # $ % ^ & * ( A B C D E F			→
+found_compare_f	0	)	greater_restore	←
+found_compare_f	1	!	greater_restore	←
+found_compare_f	2	@	greater_restore	←
+found_compare_f	3	#	greater_restore	←
+found_compare_f	4	$	greater_restore	←
+found_compare_f	5	%	greater_restore	←
+found_compare_f	6	^	greater_restore	←
+found_compare_f	7	&	greater_restore	←
+found_compare_f	8	*	greater_restore	←
+found_compare_f	9	(	greater_restore	←
+found_compare_f	a	A	greater_restore	←
+found_compare_f	b	B	greater_restore	←
+found_compare_f	c	C	greater_restore	←
+found_compare_f	d	D	greater_restore	←
+found_compare_f	e	E	greater_restore	←
+found_compare_f	f	F	back	←
+less_restore	0 ) 1 ! 2 @ 3 # 4 $ 5 % 6 ^ 7 & 8 * 9 ( a A b B c C d D e E f F ,			←
+less_restore	⊢		restore	→
+back	0 ) 1 ! 2 @ 3 # 4 $ 5 % 6 ^ 7 & 8 * 9 ( a A b B c C d D e E f F ,			←
+back	⊢		compare	→
+greater_restore	0 ) 1 ! 2 @ 3 # 4 $ 5 % 6 ^ 7 & 8 * 9 ( a A b B c C d D e E f F ,			←
+greater_restore	⊢		swap_restore	→
+swap	⊣		equal_restore	←
+swap	) ! @ # $ % ^ & * ( A B C D E F ,			→
+swap	0	)	swap_found_0	→
+swap	1	!	swap_found_1	→
+swap	2	@	swap_found_2	→
+swap	3	#	swap_found_3	→
+swap	4	$	swap_found_4	→
+swap	5	%	swap_found_5	→
+swap	6	^	swap_found_6	→
+swap	7	&	swap_found_7	→
+swap	8	*	swap_found_8	→
+swap	9	(	swap_found_9	→
+swap	a	A	swap_found_a	→
+swap	b	B	swap_found_b	→
+swap	c	C	swap_found_c	→
+swap	d	D	swap_found_d	→
+swap	e	E	swap_found_e	→
+swap	f	F	swap_found_f	→
+swap_found_0	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_0	,		swap_catch_0	→
+swap_found_1	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_1	,		swap_catch_1	→
+swap_found_2	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_2	,		swap_catch_2	→
+swap_found_3	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_3	,		swap_catch_3	→
+swap_found_4	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_4	,		swap_catch_4	→
+swap_found_5	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_5	,		swap_catch_5	→
+swap_found_6	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_6	,		swap_catch_6	→
+swap_found_7	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_7	,		swap_catch_7	→
+swap_found_8	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_8	,		swap_catch_8	→
+swap_found_9	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_9	,		swap_catch_9	→
+swap_found_a	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_a	,		swap_catch_a	→
+swap_found_b	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_b	,		swap_catch_b	→
+swap_found_c	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_c	,		swap_catch_c	→
+swap_found_d	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_d	,		swap_catch_d	→
+swap_found_e	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_e	,		swap_catch_e	→
+swap_found_f	0 1 2 3 4 5 6 7 8 9 a b c d e f			→
+swap_found_f	,		swap_catch_f	→
+swap_catch_0	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_0	0	)	swap_mark_0	←
+swap_catch_0	1	)	swap_mark_1	←
+swap_catch_0	2	)	swap_mark_2	←
+swap_catch_0	3	)	swap_mark_3	←
+swap_catch_0	4	)	swap_mark_4	←
+swap_catch_0	5	)	swap_mark_5	←
+swap_catch_0	6	)	swap_mark_6	←
+swap_catch_0	7	)	swap_mark_7	←
+swap_catch_0	8	)	swap_mark_8	←
+swap_catch_0	9	)	swap_mark_9	←
+swap_catch_0	a	)	swap_mark_a	←
+swap_catch_0	b	)	swap_mark_b	←
+swap_catch_0	c	)	swap_mark_c	←
+swap_catch_0	d	)	swap_mark_d	←
+swap_catch_0	e	)	swap_mark_e	←
+swap_catch_0	f	)	swap_mark_f	←
+swap_catch_1	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_1	0	!	swap_mark_0	←
+swap_catch_1	1	!	swap_mark_1	←
+swap_catch_1	2	!	swap_mark_2	←
+swap_catch_1	3	!	swap_mark_3	←
+swap_catch_1	4	!	swap_mark_4	←
+swap_catch_1	5	!	swap_mark_5	←
+swap_catch_1	6	!	swap_mark_6	←
+swap_catch_1	7	!	swap_mark_7	←
+swap_catch_1	8	!	swap_mark_8	←
+swap_catch_1	9	!	swap_mark_9	←
+swap_catch_1	a	!	swap_mark_a	←
+swap_catch_1	b	!	swap_mark_b	←
+swap_catch_1	c	!	swap_mark_c	←
+swap_catch_1	d	!	swap_mark_d	←
+swap_catch_1	e	!	swap_mark_e	←
+swap_catch_1	f	!	swap_mark_f	←
+swap_catch_2	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_2	0	@	swap_mark_0	←
+swap_catch_2	1	@	swap_mark_1	←
+swap_catch_2	2	@	swap_mark_2	←
+swap_catch_2	3	@	swap_mark_3	←
+swap_catch_2	4	@	swap_mark_4	←
+swap_catch_2	5	@	swap_mark_5	←
+swap_catch_2	6	@	swap_mark_6	←
+swap_catch_2	7	@	swap_mark_7	←
+swap_catch_2	8	@	swap_mark_8	←
+swap_catch_2	9	@	swap_mark_9	←
+swap_catch_2	a	@	swap_mark_a	←
+swap_catch_2	b	@	swap_mark_b	←
+swap_catch_2	c	@	swap_mark_c	←
+swap_catch_2	d	@	swap_mark_d	←
+swap_catch_2	e	@	swap_mark_e	←
+swap_catch_2	f	@	swap_mark_f	←
+swap_catch_3	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_3	0	#	swap_mark_0	←
+swap_catch_3	1	#	swap_mark_1	←
+swap_catch_3	2	#	swap_mark_2	←
+swap_catch_3	3	#	swap_mark_3	←
+swap_catch_3	4	#	swap_mark_4	←
+swap_catch_3	5	#	swap_mark_5	←
+swap_catch_3	6	#	swap_mark_6	←
+swap_catch_3	7	#	swap_mark_7	←
+swap_catch_3	8	#	swap_mark_8	←
+swap_catch_3	9	#	swap_mark_9	←
+swap_catch_3	a	#	swap_mark_a	←
+swap_catch_3	b	#	swap_mark_b	←
+swap_catch_3	c	#	swap_mark_c	←
+swap_catch_3	d	#	swap_mark_d	←
+swap_catch_3	e	#	swap_mark_e	←
+swap_catch_3	f	#	swap_mark_f	←
+swap_catch_4	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_4	0	$	swap_mark_0	←
+swap_catch_4	1	$	swap_mark_1	←
+swap_catch_4	2	$	swap_mark_2	←
+swap_catch_4	3	$	swap_mark_3	←
+swap_catch_4	4	$	swap_mark_4	←
+swap_catch_4	5	$	swap_mark_5	←
+swap_catch_4	6	$	swap_mark_6	←
+swap_catch_4	7	$	swap_mark_7	←
+swap_catch_4	8	$	swap_mark_8	←
+swap_catch_4	9	$	swap_mark_9	←
+swap_catch_4	a	$	swap_mark_a	←
+swap_catch_4	b	$	swap_mark_b	←
+swap_catch_4	c	$	swap_mark_c	←
+swap_catch_4	d	$	swap_mark_d	←
+swap_catch_4	e	$	swap_mark_e	←
+swap_catch_4	f	$	swap_mark_f	←
+swap_catch_5	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_5	0	%	swap_mark_0	←
+swap_catch_5	1	%	swap_mark_1	←
+swap_catch_5	2	%	swap_mark_2	←
+swap_catch_5	3	%	swap_mark_3	←
+swap_catch_5	4	%	swap_mark_4	←
+swap_catch_5	5	%	swap_mark_5	←
+swap_catch_5	6	%	swap_mark_6	←
+swap_catch_5	7	%	swap_mark_7	←
+swap_catch_5	8	%	swap_mark_8	←
+swap_catch_5	9	%	swap_mark_9	←
+swap_catch_5	a	%	swap_mark_a	←
+swap_catch_5	b	%	swap_mark_b	←
+swap_catch_5	c	%	swap_mark_c	←
+swap_catch_5	d	%	swap_mark_d	←
+swap_catch_5	e	%	swap_mark_e	←
+swap_catch_5	f	%	swap_mark_f	←
+swap_catch_6	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_6	0	^	swap_mark_0	←
+swap_catch_6	1	^	swap_mark_1	←
+swap_catch_6	2	^	swap_mark_2	←
+swap_catch_6	3	^	swap_mark_3	←
+swap_catch_6	4	^	swap_mark_4	←
+swap_catch_6	5	^	swap_mark_5	←
+swap_catch_6	6	^	swap_mark_6	←
+swap_catch_6	7	^	swap_mark_7	←
+swap_catch_6	8	^	swap_mark_8	←
+swap_catch_6	9	^	swap_mark_9	←
+swap_catch_6	a	^	swap_mark_a	←
+swap_catch_6	b	^	swap_mark_b	←
+swap_catch_6	c	^	swap_mark_c	←
+swap_catch_6	d	^	swap_mark_d	←
+swap_catch_6	e	^	swap_mark_e	←
+swap_catch_6	f	^	swap_mark_f	←
+swap_catch_7	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_7	0	&	swap_mark_0	←
+swap_catch_7	1	&	swap_mark_1	←
+swap_catch_7	2	&	swap_mark_2	←
+swap_catch_7	3	&	swap_mark_3	←
+swap_catch_7	4	&	swap_mark_4	←
+swap_catch_7	5	&	swap_mark_5	←
+swap_catch_7	6	&	swap_mark_6	←
+swap_catch_7	7	&	swap_mark_7	←
+swap_catch_7	8	&	swap_mark_8	←
+swap_catch_7	9	&	swap_mark_9	←
+swap_catch_7	a	&	swap_mark_a	←
+swap_catch_7	b	&	swap_mark_b	←
+swap_catch_7	c	&	swap_mark_c	←
+swap_catch_7	d	&	swap_mark_d	←
+swap_catch_7	e	&	swap_mark_e	←
+swap_catch_7	f	&	swap_mark_f	←
+swap_catch_8	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_8	0	*	swap_mark_0	←
+swap_catch_8	1	*	swap_mark_1	←
+swap_catch_8	2	*	swap_mark_2	←
+swap_catch_8	3	*	swap_mark_3	←
+swap_catch_8	4	*	swap_mark_4	←
+swap_catch_8	5	*	swap_mark_5	←
+swap_catch_8	6	*	swap_mark_6	←
+swap_catch_8	7	*	swap_mark_7	←
+swap_catch_8	8	*	swap_mark_8	←
+swap_catch_8	9	*	swap_mark_9	←
+swap_catch_8	a	*	swap_mark_a	←
+swap_catch_8	b	*	swap_mark_b	←
+swap_catch_8	c	*	swap_mark_c	←
+swap_catch_8	d	*	swap_mark_d	←
+swap_catch_8	e	*	swap_mark_e	←
+swap_catch_8	f	*	swap_mark_f	←
+swap_catch_9	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_9	0	(	swap_mark_0	←
+swap_catch_9	1	(	swap_mark_1	←
+swap_catch_9	2	(	swap_mark_2	←
+swap_catch_9	3	(	swap_mark_3	←
+swap_catch_9	4	(	swap_mark_4	←
+swap_catch_9	5	(	swap_mark_5	←
+swap_catch_9	6	(	swap_mark_6	←
+swap_catch_9	7	(	swap_mark_7	←
+swap_catch_9	8	(	swap_mark_8	←
+swap_catch_9	9	(	swap_mark_9	←
+swap_catch_9	a	(	swap_mark_a	←
+swap_catch_9	b	(	swap_mark_b	←
+swap_catch_9	c	(	swap_mark_c	←
+swap_catch_9	d	(	swap_mark_d	←
+swap_catch_9	e	(	swap_mark_e	←
+swap_catch_9	f	(	swap_mark_f	←
+swap_catch_a	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_a	0	A	swap_mark_0	←
+swap_catch_a	1	A	swap_mark_1	←
+swap_catch_a	2	A	swap_mark_2	←
+swap_catch_a	3	A	swap_mark_3	←
+swap_catch_a	4	A	swap_mark_4	←
+swap_catch_a	5	A	swap_mark_5	←
+swap_catch_a	6	A	swap_mark_6	←
+swap_catch_a	7	A	swap_mark_7	←
+swap_catch_a	8	A	swap_mark_8	←
+swap_catch_a	9	A	swap_mark_9	←
+swap_catch_a	a	A	swap_mark_a	←
+swap_catch_a	b	A	swap_mark_b	←
+swap_catch_a	c	A	swap_mark_c	←
+swap_catch_a	d	A	swap_mark_d	←
+swap_catch_a	e	A	swap_mark_e	←
+swap_catch_a	f	A	swap_mark_f	←
+swap_catch_b	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_b	0	B	swap_mark_0	←
+swap_catch_b	1	B	swap_mark_1	←
+swap_catch_b	2	B	swap_mark_2	←
+swap_catch_b	3	B	swap_mark_3	←
+swap_catch_b	4	B	swap_mark_4	←
+swap_catch_b	5	B	swap_mark_5	←
+swap_catch_b	6	B	swap_mark_6	←
+swap_catch_b	7	B	swap_mark_7	←
+swap_catch_b	8	B	swap_mark_8	←
+swap_catch_b	9	B	swap_mark_9	←
+swap_catch_b	a	B	swap_mark_a	←
+swap_catch_b	b	B	swap_mark_b	←
+swap_catch_b	c	B	swap_mark_c	←
+swap_catch_b	d	B	swap_mark_d	←
+swap_catch_b	e	B	swap_mark_e	←
+swap_catch_b	f	B	swap_mark_f	←
+swap_catch_c	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_c	0	C	swap_mark_0	←
+swap_catch_c	1	C	swap_mark_1	←
+swap_catch_c	2	C	swap_mark_2	←
+swap_catch_c	3	C	swap_mark_3	←
+swap_catch_c	4	C	swap_mark_4	←
+swap_catch_c	5	C	swap_mark_5	←
+swap_catch_c	6	C	swap_mark_6	←
+swap_catch_c	7	C	swap_mark_7	←
+swap_catch_c	8	C	swap_mark_8	←
+swap_catch_c	9	C	swap_mark_9	←
+swap_catch_c	a	C	swap_mark_a	←
+swap_catch_c	b	C	swap_mark_b	←
+swap_catch_c	c	C	swap_mark_c	←
+swap_catch_c	d	C	swap_mark_d	←
+swap_catch_c	e	C	swap_mark_e	←
+swap_catch_c	f	C	swap_mark_f	←
+swap_catch_d	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_d	0	D	swap_mark_0	←
+swap_catch_d	1	D	swap_mark_1	←
+swap_catch_d	2	D	swap_mark_2	←
+swap_catch_d	3	D	swap_mark_3	←
+swap_catch_d	4	D	swap_mark_4	←
+swap_catch_d	5	D	swap_mark_5	←
+swap_catch_d	6	D	swap_mark_6	←
+swap_catch_d	7	D	swap_mark_7	←
+swap_catch_d	8	D	swap_mark_8	←
+swap_catch_d	9	D	swap_mark_9	←
+swap_catch_d	a	D	swap_mark_a	←
+swap_catch_d	b	D	swap_mark_b	←
+swap_catch_d	c	D	swap_mark_c	←
+swap_catch_d	d	D	swap_mark_d	←
+swap_catch_d	e	D	swap_mark_e	←
+swap_catch_d	f	D	swap_mark_f	←
+swap_catch_e	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_e	0	E	swap_mark_0	←
+swap_catch_e	1	E	swap_mark_1	←
+swap_catch_e	2	E	swap_mark_2	←
+swap_catch_e	3	E	swap_mark_3	←
+swap_catch_e	4	E	swap_mark_4	←
+swap_catch_e	5	E	swap_mark_5	←
+swap_catch_e	6	E	swap_mark_6	←
+swap_catch_e	7	E	swap_mark_7	←
+swap_catch_e	8	E	swap_mark_8	←
+swap_catch_e	9	E	swap_mark_9	←
+swap_catch_e	a	E	swap_mark_a	←
+swap_catch_e	b	E	swap_mark_b	←
+swap_catch_e	c	E	swap_mark_c	←
+swap_catch_e	d	E	swap_mark_d	←
+swap_catch_e	e	E	swap_mark_e	←
+swap_catch_e	f	E	swap_mark_f	←
+swap_catch_f	) ! @ # $ % ^ & * ( A B C D E F			→
+swap_catch_f	0	F	swap_mark_0	←
+swap_catch_f	1	F	swap_mark_1	←
+swap_catch_f	2	F	swap_mark_2	←
+swap_catch_f	3	F	swap_mark_3	←
+swap_catch_f	4	F	swap_mark_4	←
+swap_catch_f	5	F	swap_mark_5	←
+swap_catch_f	6	F	swap_mark_6	←
+swap_catch_f	7	F	swap_mark_7	←
+swap_catch_f	8	F	swap_mark_8	←
+swap_catch_f	9	F	swap_mark_9	←
+swap_catch_f	a	F	swap_mark_a	←
+swap_catch_f	b	F	swap_mark_b	←
+swap_catch_f	c	F	swap_mark_c	←
+swap_catch_f	d	F	swap_mark_d	←
+swap_catch_f	e	F	swap_mark_e	←
+swap_catch_f	f	F	swap_mark_f	←
+swap_mark_0	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_0	,		swap_trace_0	←
+swap_mark_1	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_1	,		swap_trace_1	←
+swap_mark_2	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_2	,		swap_trace_2	←
+swap_mark_3	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_3	,		swap_trace_3	←
+swap_mark_4	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_4	,		swap_trace_4	←
+swap_mark_5	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_5	,		swap_trace_5	←
+swap_mark_6	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_6	,		swap_trace_6	←
+swap_mark_7	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_7	,		swap_trace_7	←
+swap_mark_8	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_8	,		swap_trace_8	←
+swap_mark_9	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_9	,		swap_trace_9	←
+swap_mark_a	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_a	,		swap_trace_a	←
+swap_mark_b	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_b	,		swap_trace_b	←
+swap_mark_c	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_c	,		swap_trace_c	←
+swap_mark_d	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_d	,		swap_trace_d	←
+swap_mark_e	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_e	,		swap_trace_e	←
+swap_mark_f	) ! @ # $ % ^ & * ( A B C D E F			←
+swap_mark_f	,		swap_trace_f	←
+swap_trace_0	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_0	) ! @ # $ % ^ & * ( A B C D E F	)	swap_prep	←
+swap_trace_1	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_1	) ! @ # $ % ^ & * ( A B C D E F	!	swap_prep	←
+swap_trace_2	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_2	) ! @ # $ % ^ & * ( A B C D E F	@	swap_prep	←
+swap_trace_3	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_3	) ! @ # $ % ^ & * ( A B C D E F	#	swap_prep	←
+swap_trace_4	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_4	) ! @ # $ % ^ & * ( A B C D E F	$	swap_prep	←
+swap_trace_5	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_5	) ! @ # $ % ^ & * ( A B C D E F	%	swap_prep	←
+swap_trace_6	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_6	) ! @ # $ % ^ & * ( A B C D E F	^	swap_prep	←
+swap_trace_7	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_7	) ! @ # $ % ^ & * ( A B C D E F	&	swap_prep	←
+swap_trace_8	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_8	) ! @ # $ % ^ & * ( A B C D E F	*	swap_prep	←
+swap_trace_9	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_9	) ! @ # $ % ^ & * ( A B C D E F	(	swap_prep	←
+swap_trace_a	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_a	) ! @ # $ % ^ & * ( A B C D E F	A	swap_prep	←
+swap_trace_b	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_b	) ! @ # $ % ^ & * ( A B C D E F	B	swap_prep	←
+swap_trace_c	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_c	) ! @ # $ % ^ & * ( A B C D E F	C	swap_prep	←
+swap_trace_d	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_d	) ! @ # $ % ^ & * ( A B C D E F	D	swap_prep	←
+swap_trace_e	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_e	) ! @ # $ % ^ & * ( A B C D E F	E	swap_prep	←
+swap_trace_f	0 1 2 3 4 5 6 7 8 9 a b c d e f			←
+swap_trace_f	) ! @ # $ % ^ & * ( A B C D E F	F	swap_prep	←
