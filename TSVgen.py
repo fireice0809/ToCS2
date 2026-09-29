@@ -5,8 +5,8 @@ import pandas as pd  # to export TSV later
 
 
 class Move(Enum):
-    LEFT = "→"
-    RIGHT = ""
+    LEFT = "←"
+    RIGHT = "→"
     HALT = "⏹"
 
 
@@ -16,9 +16,9 @@ class TuringTSV:
             columns=[
                 "current_state",
                 "current_symbol",
-                "move",
                 "next_symbol",
                 "next_state",
+                "move",
             ]
         )
 
@@ -38,25 +38,26 @@ class TuringTSV:
             print("Not valid movement")
             sys.exit(1)
 
-        ambigous = self.df["current_state"].isin(current_state) and self.df[
-            "current_symbol"
-        ].isin(current_symbol)
+        ambigous = (
+            (self.df["current_state"] == current_state)
+            & (self.df["current_symbol"] == current_symbol)
+        ).any()
         if ambigous:
             print(f"WARNING: OVERRIDING RECORD {current_state},{current_symbol}")
             # remove the old record
             self.df = self.df[
-                (
-                    self.df["current_state"]
-                    != current_state & self.df["current_symbol"]
-                    != current_symbol
+                ~(
+                    (self.df["current_state"] == current_state)
+                    & (self.df["current_symbol"] == current_symbol)
                 )
-            ]
+            ].reset_index(drop=True)
+
         self.df.loc[len(self.df)] = [
             current_state,
             current_symbol,
-            move,
             next_symbol,
             next_state,
+            move,
         ]
 
     def export_tsv(self):
