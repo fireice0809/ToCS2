@@ -1,275 +1,131 @@
-import sys
-from enum import Enum
+class TSVgen:
 
-import pandas as pd  # to export TSV later
+    alphabet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+    markedAlphabet = [")", "!", "@", "#", "$", "%", "^", "&", "*", "(", "a", "b", "c", "d", "e", "f"]
+    start = ["[", ","]
+    end = ["]", ","]
+    mid = ","
+    movement = ["→", "←", "⏹"]
+    special_state = ["▶", "✔"]
 
+    # fixed/changed the transition row format (now it conforms to the task)
+    def print_state(self, cur_state: str, cur_symbol: str, move: str, next_symbol: str, next_state: str):
+        print(cur_state + "\t" + cur_symbol + "\t" + move + "\t" + next_symbol + "\t" + next_state)
 
-class Move(Enum):
-    LEFT = "←"
-    RIGHT = "→"
-    HALT = "⏹"
+    def genTSV(self):
+        # the start state
+        self.print_state(self.special_state[0], " ".join(self.start), self.movement[0], "", "compare")
 
+        # find the first unmarked byte of 1st number
+        for i in range(0, len(self.alphabet)):
+            self.print_state("compare", self.alphabet[i], self.movement[0], self.markedAlphabet[i], "compare_" + self.alphabet[i])
+        self.print_state("compare", " ".join(self.markedAlphabet), self.movement[0], "", "")
+        # 2 numbers are equal if no unmarked byte found
+        self.print_state("compare", self.mid, self.movement[1], "", "equal")
 
-class TuringTSV:
-    def __init__(self):
-        self.df = pd.DataFrame(
-            columns=[
-                "current_state",
-                "current_symbol",
-                "next_symbol",
-                "next_state",
-                "move",
-            ]
-        )
+        # move to middle comma
+        for i in range(0, len(self.alphabet)):
+            self.print_state("compare_" + self.alphabet[i], " ".join(self.alphabet), self.movement[0], "", "")
+            self.print_state("compare_" + self.alphabet[i], self.mid, self.movement[0], "", "found_compare_" + self.alphabet[i])
 
-    def add_rule(self, current_state, current_symbol, move, next_symbol, next_state):
-        """add an entry to tsv
+        # find the first unmarked byte of 2nd number and give verdict(smaller/greater) if there is one
+        for i in range(0, len(self.alphabet)):
+            self.print_state("found_compare_" + self.alphabet[i], " ".join(self.markedAlphabet), self.movement[0], "", "")
+            for j in range(0, i):
+                self.print_state("found_compare_" + self.alphabet[i], self.alphabet[j], self.movement[1], self.markedAlphabet[j], "greater")
+            self.print_state("found_compare_" + self.alphabet[i], self.alphabet[i], self.movement[1], self.markedAlphabet[i], "back")
+            for j in range(i+1, len(self.alphabet)):
+                self.print_state("found_compare_" + self.alphabet[i], self.alphabet[j], self.movement[1], self.markedAlphabet[j], "smaller")
 
-        Args:
-            current_state (str): current state
-            current_symbol (char): current symbol
-            move (enum): left, right or halt
-            next_symbol (char): write to the tape
-            next_state (str): next state
-        """
-        try:
-            move = move.value
-        except:  # noqa: E722
-            print("Not valid movement")
-            sys.exit(1)
+        # if 2 bytes are equal, move completely back to start and try again
+        self.print_state("back", self.mid, self.movement[1], "", "back2")
+        self.print_state("back", " ".join(self.alphabet + self.markedAlphabet), self.movement[1], "", "")
+        self.print_state("back2", " ".join(self.alphabet + self.markedAlphabet), self.movement[1], "", "")
+        self.print_state("back2", " ".join(self.start), self.movement[0], "", "compare")
 
-        ambigous = (
-            (self.df["current_state"] == current_state)
-            & (self.df["current_symbol"] == current_symbol)
-        ).any()
-        if ambigous:
-            print(f"WARNING: OVERRIDING RECORD {current_state},{current_symbol}")
-            # remove the old record
-            self.df = self.df[
-                ~(
-                    (self.df["current_state"] == current_state)
-                    & (self.df["current_symbol"] == current_symbol)
-                )
-            ].reset_index(drop=True)
+        # if 1st number is smaller, move completely back to start and prepare for restoring
+        self.print_state("smaller", self.mid, self.movement[1], "", "smaller2")
+        self.print_state("smaller", " ".join(self.markedAlphabet + self.alphabet), self.movement[1], "", "")
+        self.print_state("smaller2", " ".join(self.markedAlphabet + self.alphabet), self.movement[1], "", "")
+        self.print_state("smaller2", " ".join(self.start), self.movement[0], "", "restore")
 
-        self.df.loc[len(self.df)] = [
-            current_state,
-            current_symbol,
-            next_symbol,
-            next_state,
-            move,
-        ]
+        # if 1st number is greater, move completely back to start and prepare for restoring & swapping
+        self.print_state("greater", self.mid, self.movement[1], "", "greater2")
+        self.print_state("greater", " ".join(self.markedAlphabet + self.alphabet), self.movement[1], "", "")
+        self.print_state("greater2", " ".join(self.markedAlphabet + self.alphabet), self.movement[1], "", "")
+        self.print_state("greater2", " ".join(self.start), self.movement[0], "", "restore_swap")
 
-    def export_tsv(self):
+        # is 2 numbers are equal, move completely back to start and prepare for restoring 
+        self.print_state("equal", " ".join(self.alphabet + self.markedAlphabet), self.movement[1], "", "")
+        self.print_state("equal", " ".join(self.start), self.movement[0], "", "restore")    
 
-        print("Exporting...")
-        self.df.to_csv("Turing.tsv", sep="\t", index=False)
-        print("Done!")
+        # restoring the original input (no swap case)
+        for i in range(0, len(self.alphabet)):
+            self.print_state("restore", self.markedAlphabet[i], self.movement[0], self.alphabet[i], "")
+        self.print_state("restore", " ".join(self.alphabet), self.movement[0], "", "")
+        self.print_state("restore", self.mid, self.movement[0], "", "restore2")
+        for i in range(0, len(self.alphabet)):
+            self.print_state("restore2", self.markedAlphabet[i], self.movement[0], self.alphabet[i], "")
+        self.print_state("restore2", " ".join(self.alphabet), self.movement[0], "", "")
+        self.print_state("restore2", " ".join(self.end), self.movement[1], "", "end")
 
+        # move pointer back to position 0 (no swap case)
+        self.print_state("end", " ".join(self.alphabet), self.movement[1], "", "")
+        self.print_state("end", self.mid, self.movement[1], "", "end2")
+        self.print_state("end2", " ".join(self.alphabet), self.movement[1], "", "")
+        self.print_state("end2", " ".join(self.start), self.movement[2], "", self.special_state[1])
 
-alphabet = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-]
-markedAlphabet = [
-    ")",
-    "!",
-    "@",
-    "#",
-    "$",
-    "%",
-    "^",
-    "&",
-    "*",
-    "(",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-]
+        # restoring the original input (swap case)
+        for i in range(0, len(self.alphabet)):
+            self.print_state("restore_swap", self.markedAlphabet[i], self.movement[0], self.alphabet[i], "")
+        self.print_state("restore_swap", " ".join(self.alphabet), self.movement[0], "", "")
+        self.print_state("restore_swap", self.mid, self.movement[0], "", "restore_swap2")
+        for i in range(0, len(self.alphabet)):
+            self.print_state("restore_swap2", self.markedAlphabet[i], self.movement[0], self.alphabet[i], "")
+        self.print_state("restore_swap2", " ".join(self.alphabet), self.movement[0], "", "")
+        # exits and accept
+        self.print_state("restore_swap2", " ".join(self.end), self.movement[1], "", "swap_prep")
 
-the_alphabet_pile = ""
-for i in range(0, 16):
-    the_alphabet_pile += alphabet[i]
-    the_alphabet_pile += " "
-the_alphabet_pile = the_alphabet_pile[:-1]
+        # move pointer back to position 0 (swap case)
+        self.print_state("swap_prep", " ".join(self.alphabet), self.movement[1], "", "")
+        self.print_state("swap_prep", self.mid, self.movement[1], "", "swap_prep2")
+        self.print_state("swap_prep2", " ".join(self.alphabet), self.movement[1], "", "")
+        # init the swap
+        self.print_state("swap_prep2", " ".join(self.start), self.movement[0], "", "swap")
 
-the_marked_pile = ""
-for i in range(0, 16):
-    the_marked_pile += markedAlphabet[i]
-    the_marked_pile += " "
-the_marked_pile = the_marked_pile[:-1]
+        # find the first unmarked byte of 1st number
+        for i in range(0, len(self.alphabet)):
+            self.print_state("swap", self.alphabet[i], self.movement[0], self.markedAlphabet[i], "swap_" + self.alphabet[i])
+        self.print_state("swap", " ".join(self.markedAlphabet), self.movement[0], "", "")
+        # if there is no more unmarked bytes, it means that the swap is done and the only thing left is restore the swapped numbers
+        self.print_state("swap", self.mid, self.movement[1], "", "smaller2") 
 
-the_pile = ""
-for i in range(0, 16):
-    the_pile += alphabet[i]
-    the_pile += " "
-    the_pile += markedAlphabet[i]
-    the_pile += " "
-the_pile = the_pile[:-1]
-# start state
-print("▶\t⊢\t\tcompare\t→")
-# compare part 1 (find the first digit inside 1st number & reaching the comma)
-for i in range(0, 16):
-    print(
-        "compare\t"
-        + alphabet[i]
-        + "\t"
-        + markedAlphabet[i]
-        + "\tcompare_"
-        + alphabet[i]
-        + "\t→"
-    )
-    print("compare_" + alphabet[i] + "\t,\t\t" + "found_compare_" + alphabet[i] + "\t→")
+        # move to middle comma
+        for i in range(0, len(self.alphabet)):
+            self.print_state("swap_" + self.alphabet[i], " ".join(self.alphabet), self.movement[0], "", "")
+            self.print_state("swap_" + self.alphabet[i], self.mid, self.movement[0], "", "swap_found_" + self.alphabet[i])
 
-for i in range(0, 16):
-    print("compare_" + alphabet[i] + "\t" + the_alphabet_pile + "\t\t\t→")
+        # find the first unmarked byte of 2nd number
+        for i in range(0, len(self.alphabet)):
+            self.print_state("swap_found_" + self.alphabet[i], " ".join(self.markedAlphabet), self.movement[0], "", "")
+            for j in range(0, len(self.alphabet)):
+                self.print_state("swap_found_" + self.alphabet[i], self.alphabet[j], self.movement[1], self.markedAlphabet[i], "swap_replace_" + self.alphabet[j])
 
-print("compare\t" + the_marked_pile + "\t\t\t→")
-# equal numbers (restore and done)
-print("compare\t,\t\tequal_restore\t←")
+        # move back to middle comma
+        for i in range(0, len(self.alphabet)):
+            self.print_state("swap_replace_" + self.alphabet[i], self.mid, self.movement[1], "", "swap_back_" + self.alphabet[i])
+            self.print_state("swap_replace_" + self.alphabet[i], " ".join(self.markedAlphabet), self.movement[1], "", "")
+        
+        # find the matching byte of 1st number to swap
+        for i in range(0, len(self.alphabet)):
+            self.print_state("swap_back_" + self.alphabet[i], " ".join(self.alphabet), self.movement[1], "", "")
+            self.print_state("swap_back_" + self.alphabet[i], " ".join(self.markedAlphabet), self.movement[1], self.markedAlphabet[i], "swap_back")
+
+        # move back to pos0 and start the swap cycle again
+        self.print_state("swap_back", " ".join(self.markedAlphabet), self.movement[1], "", "")
+        self.print_state("swap_back", " ".join(self.start), self.movement[0], "", "swap")
 
 
-print("equal_restore\t" + the_pile + " ,\t\t\t←")
-print("equal_restore\t⊢\t\trestore\t→")
-# start restoring & halt (for less/equal)
-print("restore\t,\t\t\t→")
-for i in range(0, 16):
-    print(
-        "restore\t"
-        + alphabet[i]
-        + " "
-        + markedAlphabet[i]
-        + "\t"
-        + alphabet[i]
-        + "\t\t→"
-    )
-
-print("swap_restore\t,\t\t\t→")
-for i in range(0, 16):
-    print(
-        "swap_restore\t"
-        + alphabet[i]
-        + " "
-        + markedAlphabet[i]
-        + "\t"
-        + alphabet[i]
-        + "\t\t→"
-    )
-
-print("restore\t⊣\t\t✔\t⏹")
-print("swap_restore\t⊣\t\tswap_prep\t←")
-print("swap_prep\t" + the_pile + " ,\t\t\t←")
-print("swap_prep\t⊢\t\tswap\t→")
-
-
-# the grand comparison
-
-for i in range(0, 16):
-    print("found_compare_" + alphabet[i] + "\t" + the_marked_pile + "\t\t\t→")
-    for j in range(0, i):
-        print(
-            "found_compare_"
-            + alphabet[i]
-            + "\t"
-            + alphabet[j]
-            + "\t"
-            + markedAlphabet[j]
-            + "\tgreater_restore\t←"
-        )
-    print(
-        "found_compare_"
-        + alphabet[i]
-        + "\t"
-        + alphabet[i]
-        + "\t"
-        + markedAlphabet[i]
-        + "\tback\t←"
-    )
-    for j in range(i + 1, 16):
-        print(
-            "found_compare_"
-            + alphabet[i]
-            + "\t"
-            + alphabet[j]
-            + "\t"
-            + markedAlphabet[j]
-            + "\tless_restore\t←"
-        )
-
-# move back to start
-print("less_restore\t" + the_pile + " ,\t\t\t←")
-print("less_restore\t⊢\t\trestore\t→")
-print("back\t" + the_pile + " ,\t\t\t←")
-print("back\t⊢\t\tcompare\t→")
-print("greater_restore\t" + the_pile + " ,\t\t\t←")
-print("greater_restore\t⊢\t\tswap_restore\t→")
-
-# the swap
-print("swap\t⊣\t\tequal_restore\t←")
-
-print("swap\t" + the_marked_pile + " ,\t\t\t→")
-for i in range(0, 16):
-    print(
-        "swap\t"
-        + alphabet[i]
-        + "\t"
-        + markedAlphabet[i]
-        + "\tswap_found_"
-        + alphabet[i]
-        + "\t→"
-    )
-
-
-for i in range(0, 16):
-    print("swap_found_" + alphabet[i] + "\t" + the_alphabet_pile + "\t\t\t→")
-    print("swap_found_" + alphabet[i] + "\t,\t\tswap_catch_" + alphabet[i] + "\t→")
-
-for i in range(0, 16):
-    print("swap_catch_" + alphabet[i] + "\t" + the_marked_pile + "\t\t\t→")
-    for j in range(0, 16):
-        print(
-            "swap_catch_"
-            + alphabet[i]
-            + "\t"
-            + alphabet[j]
-            + "\t"
-            + markedAlphabet[i]
-            + "\t"
-            + "swap_mark_"
-            + alphabet[j]
-            + "\t←"
-        )
-
-for i in range(0, 16):
-    print("swap_mark_" + alphabet[i] + "\t" + the_marked_pile + "\t\t\t←")
-    print("swap_mark_" + alphabet[i] + "\t,\t\tswap_trace_" + alphabet[i] + "\t←")
-
-for i in range(0, 16):
-    print("swap_trace_" + alphabet[i] + "\t" + the_alphabet_pile + "\t\t\t←")
-    print(
-        "swap_trace_"
-        + alphabet[i]
-        + "\t"
-        + the_marked_pile
-        + "\t"
-        + markedAlphabet[i]
-        + "\tswap_prep"
-        + "\t←"
-    )
+if __name__ == "__main__":
+    tsv = TSVgen()
+    tsv.genTSV()
