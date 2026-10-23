@@ -10,7 +10,7 @@ class TSVgen:
         self.MID = ","
         self.LEFT = "←"
         self.RIGHT = "→"
-        self.HALT = "■"
+        self.HALT = "⏹"
         # movement = ["→", "←", "⏹"]
         self.special_state = ["⎆", "✔"]
         self.blank = "·"
