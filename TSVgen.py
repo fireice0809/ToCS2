@@ -4,14 +4,14 @@ class TSVgen:
         self.alphabet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
         self.markedAlphabet = [")", "!", "@", "#", "$", "%", "^", "&", "*", "(", "a", "b", "c", "d", "e", "f"]
         self.start_compare = ["[", ","]
-        self.end_compare = ["]", ","]
+        self.MID_BOUND = "}"
+        self.end_compare = ["]", ",", self.MID_BOUND]
         self.START = "["
         self.END = "]"
         self.MID = ","
         self.LEFT = "←"
         self.RIGHT = "→"
         self.HALT = "⏹"
-        # movement = ["→", "←", "⏹"]
         self.special_state = ["⎆", "✔"]
         self.blank = "·"
 
@@ -47,9 +47,7 @@ class TSVgen:
         for i in range(len(self.alphabet)):
             self.print_state("compare_" + self.alphabet[i], " ".join(self.alphabet), self.RIGHT, "", "")
             self.print_state("compare_" + self.alphabet[i], self.MID, self.RIGHT, "", "found_compare_" + self.alphabet[i])
-
-            # TODO: if reach to the end ] -> change the the last comma to be ] and then back track implementation
-            self.print_state("compare_" + self.alphabet[i], self.END, self.LEFT, "", "backtrack1")
+            self.print_state("compare_" + self.alphabet[i], f"{self.END} {self.MID_BOUND}", self.LEFT, "", "backtrack1",)
 
     
         # find the first unmarked byte of 2nd number and give verdict(smaller/greater) if there is one
@@ -92,18 +90,11 @@ class TSVgen:
             self.print_state("restore2", self.markedAlphabet[i], self.RIGHT, self.alphabet[i], "")
         self.print_state("restore2", " ".join(self.alphabet), self.RIGHT, "", "")
         self.print_state("restore2", self.MID, self.LEFT, "", "advance")
-        self.print_state("restore2", self.END, self.LEFT, "", "backtrack1")
+        self.print_state("restore2", f"{self.END} {self.MID_BOUND}", self.LEFT, "", "backtrack1")
 
-        # TODO: get back to the current number and start to compare again
         
         self.print_state("advance", " ".join(self.alphabet), self.LEFT, "", "advance")
         self.print_state("advance", self.MID, self.RIGHT, "", "compare") # start compare again
-
-        # # move pointer back to position 0 (no swap case)
-        # self.print_state("end", " ".join(self.alphabet), self.LEFT, "", "")
-        # self.print_state("end", self.MID, self.LEFT, "", "end2")
-        # self.print_state("end2", " ".join(self.alphabet), self.LEFT, "", "")
-        # self.print_state("end2", " ".join(self.start_compare), self.HALT, "", self.special_state[1])
 
         # restoring the original input (swap case)
         for i in range(len(self.alphabet)):
@@ -158,24 +149,23 @@ class TSVgen:
 
         # backtrack implementation
 
-        self.print_state("backtrack1" , self.MID, self.LEFT, self.END, "backtrack2") # see a comma 
-        self.print_state("backtrack1" , self.START, self.RIGHT, "", "clean_up") # only 1 element left, fully sorted eg [0001]0002]0003]
+        self.print_state("backtrack1" , self.MID, self.LEFT, self.MID_BOUND, "backtrack2") # see a comma 
+        self.print_state("backtrack1" , self.START, self.RIGHT, "", "clean_up") # only 1 element left, fully sorted eg [000}]0002}0003]
 
         self.print_state("backtrack1" , " ".join(self.alphabet), self.LEFT, "", "backtrack1")
         #If there still scratchmark, implement restore (in case of 1 element only)
         for i in range(len(self.alphabet)):
             self.print_state("backtrack1" , self.markedAlphabet[i], self.LEFT, self.alphabet[i], "backtrack1")
         
-
-
         self.print_state("backtrack2" , " ".join(self.join_list(self.alphabet,self.markedAlphabet,self.MID)), self.LEFT, "", "backtrack2") 
         self.print_state("backtrack2" , self.START, self.RIGHT, "", "compare")  # reach the start AND not ran n time
 
         #clearn up: change all ] -> comman except last 1
-        self.print_state("clean_up" ," ".join(self.alphabet), self.RIGHT, "", "clean_up")
-        self.print_state("clean_up" , self.END, self.RIGHT, ",", "clean_up")
-        self.print_state("clean_up" , self.blank, self.LEFT, "", "clean_up_last")
-        self.print_state("clean_up_last" , ",", self.LEFT, self.END, "return_base") # return to 0 and halt, everything sorted, accepted
+
+        self.print_state("clean_up", " ".join(self.alphabet), self.RIGHT, "", "clean_up")
+        self.print_state("clean_up", self.MID_BOUND, self.RIGHT, self.MID, "clean_up")
+        self.print_state( "clean_up", self.END, self.LEFT, "", "return_base")
+
 
         self.print_state("return_base" , " ".join(self.join_list(self.markedAlphabet,self.alphabet,self.end_compare)), self.LEFT, "", "return_base")
         self.print_state("return_base" , self.START, self.HALT, "", self.special_state[1]) #Reach index 0, halt and accept

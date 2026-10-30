@@ -65,9 +65,33 @@ def testGen(size: int, edge: int):
         return un_sort, sorted
     elif (edge == 4):
         return "[]", "[]"
+
+    elif (edge == 5):
+        remain = size
+        while(remain > 0):
+            if (remain % 2 == 0):
+                cur = "00000000000000000000"
+            else:
+                cur = "FFFFFFFFFFFFFFFFFFFF"
+            test.append(cur)
+            remain -= dupes
+        random.shuffle(test)
+        un_sort = "[" + ",".join(test) + "]"
+        test.sort(reverse=False)
+        
+        sorted = "[" + ",".join(test) + "]"
+        return un_sort, sorted
+
+    elif (edge == 6):
+        cur = numGen()
+        for i in range(size):
+            test.append(cur)
+        sort = "[" + ",".join(test) + "]"
+        return sort, sort
+    
     return None
 
-def execute_test(test_tape):
+def execute_test(test_tape: list):
     result = subprocess.run(
         ["python3", "./runner","--machine","./turing.tsv","--max-steps","10000000","--json",test_tape,],
         capture_output=True,
@@ -78,9 +102,9 @@ def execute_test(test_tape):
     return data["finalTape"], data["steps"]
 
 
-def run_test(test_case, expected_output):
-    final_tape, time = execute_test(test_case)
-    return final_tape == expected_output, time
+def run_test(test_case: list, expected_output: int):
+    final_tape, sec = execute_test(test_case)
+    return final_tape == expected_output, sec
 
 
 
@@ -88,16 +112,16 @@ def test_edge(df, edge, false_count, false_case, case_count):
     for size in range(100):
             for i in range(1): #Increase or decrease this to c
                 case, ground_truth = testGen(size, edge)
-                sucess, time = run_test(case, ground_truth)
+                sucess, sec = run_test(case, ground_truth)
                 if sucess:
-                    df.loc[len(df)] = {"Size": size, "Time": time}
+                    df.loc[len(df)] = {"Size": size, "Time": sec}
                 else:
                     false_count += 1
                     false_case.append(case_count)
                 case_count +=1
 
 def test_main():
-        # testing
+    # testing
     false_count = 0
     false_case = []
     case_count = 0
