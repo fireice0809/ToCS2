@@ -1,21 +1,21 @@
 class TSVgen:
-
     def __init__(self):
-        self.alphabet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-        self.markedAlphabet = [")", "!", "@", "#", "$", "%", "^", "&", "*", "(", "a", "b", "c", "d", "e", "f"]
-        self.start_compare = ["[", ","]
+        # some constants, and lists to improve readability of the code!
         self.MID_BOUND = "}"
-        self.end_compare = ["]", ",", self.MID_BOUND]
         self.START = "["
         self.END = "]"
         self.MID = ","
         self.LEFT = "←"
         self.RIGHT = "→"
         self.HALT = "⏹"
-        self.special_state = ["⎆", "✔"]
-        self.blank = "·"
+        self.alphabet = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+        self.markedAlphabet = [")", "!", "@", "#", "$", "%", "^", "&", "*", "(", "a", "b", "c", "d", "e", "f"]
+        self.start_compare = ["[", ","]
+        self.special_state = ["⎆", "✔"] # start and accept
+        self.end_compare = ["]", ",", self.MID_BOUND]
 
-    # helper function
+
+    # helper function to join list
     def join_list(self, *args):
         all = set()
         for arg in args:
@@ -36,11 +36,11 @@ class TSVgen:
         #edge case []
         self.print_state("compare", self.END, self.LEFT, "", "return_base")
 
-        # find the first unmarked byte of 1st number
+        # find the first unmarked digit of 1st word
         for i in range(len(self.alphabet)):
             self.print_state("compare", self.alphabet[i], self.RIGHT, self.markedAlphabet[i], "compare_" + self.alphabet[i])
         self.print_state("compare", " ".join(self.markedAlphabet), self.RIGHT, "", "")
-        # 2 numbers are equal if no unmarked byte found
+        # 2 words are equal if no unmarked digit is found
         self.print_state("compare", self.MID, self.LEFT, "", "equal")
 
         # move to middle comma
@@ -50,7 +50,7 @@ class TSVgen:
             self.print_state("compare_" + self.alphabet[i], f"{self.END} {self.MID_BOUND}", self.LEFT, "", "backtrack1",)
 
     
-        # find the first unmarked byte of 2nd number and give verdict(smaller/greater) if there is one
+        # find the first unmarked digit of 2nd word and give verdict(smaller/greater) if there is one
         for i in range(len(self.alphabet)):
             self.print_state("found_compare_" + self.alphabet[i], " ".join(self.markedAlphabet), self.RIGHT, "", "")
             for j in range(i):
@@ -59,25 +59,25 @@ class TSVgen:
             for j in range(i+1, len(self.alphabet)):
                 self.print_state("found_compare_" + self.alphabet[i], self.alphabet[j], self.LEFT, self.markedAlphabet[j], "smaller")
 
-        # if 2 bytes are equal, move completely back to start and try again
+        # if 2 digits are equal, move back to the start of the current pair and try again
         self.print_state("back", self.MID, self.LEFT, "", "back2")
         self.print_state("back", " ".join(self.alphabet + self.markedAlphabet), self.LEFT, "", "")
         self.print_state("back2", " ".join(self.alphabet + self.markedAlphabet), self.LEFT, "", "")
         self.print_state("back2", " ".join(self.start_compare), self.RIGHT, "", "compare")
 
-        # if 1st number is smaller, move completely back to start and prepare for restoring
+        # if 1st word is smaller, move back to the start of the current pair and prepare for restoring
         self.print_state("smaller", self.MID, self.LEFT, "", "smaller2")
         self.print_state("smaller", " ".join(self.markedAlphabet + self.alphabet), self.LEFT, "", "")
         self.print_state("smaller2", " ".join(self.markedAlphabet + self.alphabet), self.LEFT, "", "")
         self.print_state("smaller2", " ".join(self.start_compare), self.RIGHT, "", "restore")
 
-        # if 1st number is greater, move completely back to start and prepare for restoring & swapping
+        # if 1st word is greater, move back to the start of the current pair and prepare for restoring & swapping
         self.print_state("greater", self.MID, self.LEFT, "", "greater2")
         self.print_state("greater", " ".join(self.markedAlphabet + self.alphabet), self.LEFT, "", "")
         self.print_state("greater2", " ".join(self.markedAlphabet + self.alphabet), self.LEFT, "", "")
         self.print_state("greater2", " ".join(self.start_compare), self.RIGHT, "", "restore_swap")
 
-        # is 2 numbers are equal, move completely back to start and prepare for restoring 
+        # if 2 words are equal, move back to the start of the current pair and prepare for restoring
         self.print_state("equal", " ".join(self.alphabet + self.markedAlphabet), self.LEFT, "", "")
         self.print_state("equal", " ".join(self.start_compare), self.RIGHT, "", "restore")    
 
@@ -86,10 +86,14 @@ class TSVgen:
             self.print_state("restore", self.markedAlphabet[i], self.RIGHT, self.alphabet[i], "")
         self.print_state("restore", " ".join(self.alphabet), self.RIGHT, "", "")
         self.print_state("restore", self.MID, self.RIGHT, "", "restore2")
+
+        # restore after passing through the ","
         for i in range(len(self.alphabet)):
             self.print_state("restore2", self.markedAlphabet[i], self.RIGHT, self.alphabet[i], "")
         self.print_state("restore2", " ".join(self.alphabet), self.RIGHT, "", "")
         self.print_state("restore2", self.MID, self.LEFT, "", "advance")
+
+        # if restore meets the bound, then backtrack
         self.print_state("restore2", f"{self.END} {self.MID_BOUND}", self.LEFT, "", "backtrack1")
 
         
@@ -104,21 +108,21 @@ class TSVgen:
         for i in range(len(self.alphabet)):
             self.print_state("restore_swap2", self.markedAlphabet[i], self.RIGHT, self.alphabet[i], "")
         self.print_state("restore_swap2", " ".join(self.alphabet), self.RIGHT, "", "")
-        # exits and accept
+        # finish restoring and prepare to swap
         self.print_state("restore_swap2", " ".join(self.end_compare), self.LEFT, "", "swap_prep")
 
-        # move pointer back to position 0 (swap case)
+        # move pointer back to the start of the current pair (swap case)
         self.print_state("swap_prep", " ".join(self.alphabet), self.LEFT, "", "")
         self.print_state("swap_prep", self.MID, self.LEFT, "", "swap_prep2")
         self.print_state("swap_prep2", " ".join(self.alphabet), self.LEFT, "", "")
         # init the swap
         self.print_state("swap_prep2", " ".join(self.start_compare), self.RIGHT, "", "swap")
 
-        # find the first unmarked byte of 1st number
+        # find the first unmarked digit of 1st word
         for i in range(len(self.alphabet)):
             self.print_state("swap", self.alphabet[i], self.RIGHT, self.markedAlphabet[i], "swap_" + self.alphabet[i])
         self.print_state("swap", " ".join(self.markedAlphabet), self.RIGHT, "", "")
-        # if there is no more unmarked bytes, it means that the swap is done and the only thing left is restore the swapped numbers
+        # if there are no more unmarked digits, the swap is done and the only thing left is to restore the swapped words
         self.print_state("swap", self.MID, self.LEFT, "", "smaller2") 
 
         # move to middle comma
@@ -126,7 +130,7 @@ class TSVgen:
             self.print_state("swap_" + self.alphabet[i], " ".join(self.alphabet), self.RIGHT, "", "")
             self.print_state("swap_" + self.alphabet[i], self.MID, self.RIGHT, "", "swap_found_" + self.alphabet[i])
 
-        # find the first unmarked byte of 2nd number
+        # find the first unmarked digit of 2nd word
         for i in range(len(self.alphabet)):
             self.print_state("swap_found_" + self.alphabet[i], " ".join(self.markedAlphabet), self.RIGHT, "", "")
             for j in range(len(self.alphabet)):
@@ -137,39 +141,36 @@ class TSVgen:
             self.print_state("swap_replace_" + self.alphabet[i], self.MID, self.LEFT, "", "swap_back_" + self.alphabet[i])
             self.print_state("swap_replace_" + self.alphabet[i], " ".join(self.markedAlphabet), self.LEFT, "", "")
         
-        # find the matching byte of 1st number to swap
+        # find the matching digit of 1st word to swap
         for i in range(len(self.alphabet)):
             self.print_state("swap_back_" + self.alphabet[i], " ".join(self.alphabet), self.LEFT, "", "")
             self.print_state("swap_back_" + self.alphabet[i], " ".join(self.markedAlphabet), self.LEFT, self.markedAlphabet[i], "swap_back")
 
-        # move back to pos0 and start the swap cycle again
+        # move back to the start of the current pair and start the swap cycle again
         self.print_state("swap_back", " ".join(self.markedAlphabet), self.LEFT, "", "")
         self.print_state("swap_back", " ".join(self.start_compare), self.RIGHT, "", "swap")
 
 
         # backtrack implementation
-
         self.print_state("backtrack1" , self.MID, self.LEFT, self.MID_BOUND, "backtrack2") # see a comma 
-        self.print_state("backtrack1" , self.START, self.RIGHT, "", "clean_up") # only 1 element left, fully sorted eg [000}]0002}0003]
-
+        self.print_state("backtrack1" , self.START, self.RIGHT, "", "clean_up") # only 1 element left, fully sorted
         self.print_state("backtrack1" , " ".join(self.alphabet), self.LEFT, "", "backtrack1")
-        #If there still scratchmark, implement restore (in case of 1 element only)
+
+        # if there is still a scratch mark, restore it while backtracking
         for i in range(len(self.alphabet)):
             self.print_state("backtrack1" , self.markedAlphabet[i], self.LEFT, self.alphabet[i], "backtrack1")
         
         self.print_state("backtrack2" , " ".join(self.join_list(self.alphabet,self.markedAlphabet,self.MID)), self.LEFT, "", "backtrack2") 
-        self.print_state("backtrack2" , self.START, self.RIGHT, "", "compare")  # reach the start AND not ran n time
+        self.print_state("backtrack2" , self.START, self.RIGHT, "", "compare")  # reach the start and begin the next pass
 
-        #clearn up: change all ] -> comman except last 1
-
+        # clean up: change all } -> comma, except the final ]
         self.print_state("clean_up", " ".join(self.alphabet), self.RIGHT, "", "clean_up")
         self.print_state("clean_up", self.MID_BOUND, self.RIGHT, self.MID, "clean_up")
         self.print_state( "clean_up", self.END, self.LEFT, "", "return_base")
 
-
+        # Return to base after clean up then Halt and accept
         self.print_state("return_base" , " ".join(self.join_list(self.markedAlphabet,self.alphabet,self.end_compare)), self.LEFT, "", "return_base")
         self.print_state("return_base" , self.START, self.HALT, "", self.special_state[1]) #Reach index 0, halt and accept
-
 
 if __name__ == "__main__":
     tsv = TSVgen()
