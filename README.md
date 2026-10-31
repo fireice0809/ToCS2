@@ -13,10 +13,11 @@ To generate the TSV file, run:
 `python TSVgen.py > turing.tsv`  
 (or python3, depends on which one works for you)
 
-## Generate custom testcases
-To generate the test cases, run:  
-`python testgen.py > test.inp`  
-then go into the newly generated file and copy-paste the test case you want to test into the TM simulator  
+## Run and save new generated test_case
+To generate and run test case (and replace old test case), run:  
+`rm -r ./test_case.txt`
+`python testgen.py`  
+then go into the newly generated file and copy-paste the test case you want to test into the TM simulator 
 (IMPORTANT: Increase the Maximum continuous steps inside the TM Simulator for larger test cases)
 
 ## Current state (Update 27/10/2026):
