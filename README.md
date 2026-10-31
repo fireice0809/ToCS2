@@ -16,6 +16,7 @@ To generate the TSV file, run:
 ## Run and save new generated test_case
 To generate and run test case (and replace old test case), run:  
 `rm -r ./test_case.txt`
+
 `python testgen.py`  
 then go into the newly generated file and copy-paste the test case you want to test into the TM simulator 
 (IMPORTANT: Increase the Maximum continuous steps inside the TM Simulator for larger test cases)
