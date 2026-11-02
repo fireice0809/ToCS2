@@ -1,9 +1,14 @@
 import random
-import subprocess
-import json
 import pandas as pd
+from pathlib import Path
+from runner import Machine
 
+
+MACHINE_PATH = "./turing.tsv"
 MAX = 18446744073709551615 # 16^16 - 1
+
+machine = Machine.from_tsv(Path(MACHINE_PATH).read_text(encoding="utf-8"))
+
 random.seed(36)
 
 SAVE_FILE = "test_cases.txt"
@@ -110,18 +115,13 @@ def save_case(test_case: str):
 
 def execute_test(test_tape: str):
     save_case(test_tape)
-    result = subprocess.run(
-        ["python3", "./runner","--machine","./turing.tsv","--max-steps","10000000","--json",test_tape,],
-        capture_output=True,
-        text=True,
-    )
-    data = json.loads(result.stdout)
-
-    return data["finalTape"], data["steps"], data["finalHeadPosition"], data["status"]
+    with machine.run(test_tape, max_steps= 0) as result: # no limit in step
+        final_tape = "".join(result.iter_text_chunks())
+        return final_tape, result.steps, result.head_position, result.status, result.final_state
 
 def run_test(test_case: str, expected_output: str):
-    final_tape, num_steps, final_position, status = execute_test(test_case)
-    return final_tape == expected_output and final_position == 0 and status == "accepted", num_steps
+    final_tape, num_steps, final_position, status, final_state = execute_test(test_case)
+    return final_tape == expected_output and final_position == 0 and status == "accepted" and final_state == "✔", num_steps
 
 class Tester:
     def __init__(self):
