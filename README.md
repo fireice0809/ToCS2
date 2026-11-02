@@ -38,9 +38,5 @@ This overwrites the old `test_cases.txt` file. Since the generator uses the fixe
 
 Note: test_cases.txt also pre-generated in submission
 
-## Current state (Update 27/10/2026):
-- Can fully sort a list of 8-byte numbers 
-- Now also have a fully customizable test generator 
-
-## Final Update:
+## Final Update (2/11/2026):
 - The machine now passed all the test cases, submission ready.
