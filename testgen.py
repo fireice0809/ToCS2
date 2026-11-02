@@ -99,6 +99,10 @@ def test_gen(size: int, edge_case: int):
     
     return None
 
+def clear_test_case():
+    with open(SAVE_FILE, "w") as file:
+        file.write("")
+
 def save_case(test_case: str):
     with open(SAVE_FILE, "a") as file:
         file.write(test_case + "\n")
@@ -124,17 +128,19 @@ class Tester:
         self.fail_count = 0
         self.fail_cases = []
         self.case_count = 0
-        self.df = pd.DataFrame(columns=["Size", "num_steps"])
+        self.df = pd.DataFrame(columns=["tape_size", "num_steps"])
 
     def test(self, edge_case: int, test_range: int = 100, num_test: int = 1):
         for size in range(1, test_range):
             for _ in range(num_test):
                 case, ground_truth = test_gen(size, edge_case)
                 if edge_case == 4: # case 4 is empty list
-                    size = 0
+                    tape_size = 2 # tape length 2 []
+                else:
+                    tape_size = 17*size + 1
                 success, num_steps = run_test(case, ground_truth)
                 if success:
-                    self.df.loc[len(self.df)] = {"Size": size, "num_steps": num_steps}
+                    self.df.loc[len(self.df)] = {"tape_size": tape_size, "num_steps": num_steps}
                 else:
                     self.fail_count += 1
                     self.fail_cases.append(self.case_count)
@@ -142,6 +148,7 @@ class Tester:
 
     def run_test_suite(self):
         # testing
+        clear_test_case()
         self.test(0, 50, 10) # random cases
         self.test(1, 50, 1) # already sorted
         self.test(2, 50, 1) # reversed

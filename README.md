@@ -8,22 +8,38 @@ Recap: A row of Turing machine transition consists of 5 sections delimited by th
 **Current state - Current symbol - Move - Next symbol - Next state** 
 A Turing machine will have a bunch of those transition lines which (hopefully) covers all the possibilities.
 
+## Requirements
+
+Python 3.10 or newer is required.
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
 ## Generate transition table as TSV
 To generate the TSV file, run:  
-`python TSVgen.py > turing.tsv`  
+
+```bash
+python TSVgen.py > turing.tsv
+```
 (or python3, depends on which one works for you)
+Note: In submission, turing.tsv is already generated
 
-## Run and save new generated test_case
-To generate and run test case (and replace old test case), run:  
-`rm -r ./test_case.txt`
+## Run and save newly generated test cases
+To generate and run the test cases, run:  
+```bash
+python testgen.py
+```
 
-`python testgen.py`  
-then go into the newly generated file and copy-paste the test case you want to test into the TM simulator 
+This overwrites the old `test_cases.txt` file. Since the generator uses the fixed seed `36`, the generated test cases remain the same on each fresh run. Then, go into the newly generated file and copy-paste the test case you want to test into the TM simulator, otherwise it already tested for these cases.
+
 (IMPORTANT: Increase the Maximum continuous steps inside the TM Simulator for larger test cases)
+
+Note: test_cases.txt also pre-generated in submission
 
 ## Current state (Update 27/10/2026):
 - Can fully sort a list of 8-byte numbers 
 - Now also have a fully customizable test generator 
 
-## TODO:
-- Add the final report
+## Final Update:
+- The machine now passed all the test cases, submission ready.

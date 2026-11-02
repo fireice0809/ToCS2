@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def main() -> None:
+def main():
     data = pd.read_csv("complexity.csv")
-    plt.scatter(data["Size"], data["num_steps"],s = 20, color = "green", alpha=0.8)
-    plt.xlabel("Input size")
+    plt.scatter(data["tape_size"], data["num_steps"],s = 20, color = "green", alpha=0.8)
+    plt.xlabel("Tape size")
     plt.ylabel("Number of steps")
     plt.title("Turing machine complexity")
     plt.grid(alpha=0.2)
