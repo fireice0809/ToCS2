@@ -1,7 +1,7 @@
 # Turing machine resembled as a TSV file and it's Python cource code
 
 The required task: https://canvas.uts.edu.au/courses/40908/pages/specification-for-assessment-2?module_item_id=2854879  
-TL;DR: Sort a list of 8-bytes numbers in hexadecimal.
+TL;DR: Sort a list of hexadecimal words.
 
 The Turing machine format: https://canvas.uts.edu.au/courses/40908/pages/turing-machine-specification-format?module_item_id=2800591  
 Recap: A row of Turing machine transition consists of 5 sections delimited by the tab character (`\t` in Python):   
@@ -23,6 +23,7 @@ To generate the TSV file, run:
 python TSVgen.py > turing.tsv
 ```
 (or python3, depends on which one works for you)
+
 Note: In submission, turing.tsv is already generated
 
 ## Run and save newly generated test cases

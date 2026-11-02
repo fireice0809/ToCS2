@@ -1,8 +1,9 @@
 import random
-import pandas as pd
 from pathlib import Path
-from runner import Machine
 
+import pandas as pd
+
+from runner import Machine
 
 MACHINE_PATH = "./turing.tsv"
 MAX = 18446744073709551615 # 16^16 - 1
